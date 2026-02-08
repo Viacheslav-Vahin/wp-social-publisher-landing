@@ -2,54 +2,788 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>WP Social Publisher</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Publish and schedule WordPress posts to LinkedIn, X, and Facebook. Simple and reliable.">
+  <title>WP Social Publisher - Publish and Schedule from WordPress</title>
+  <meta name="description" content="Publish and schedule WordPress posts to LinkedIn, X, and Facebook. One post to multiple accounts. No SaaS. Clear logs.">
+  <meta property="og:title" content="WP Social Publisher">
+  <meta property="og:description" content="Publish and schedule WordPress posts to LinkedIn, X, and Facebook.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wpsocialpublisher.com/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 0; color: #111; }
-    .wrap { max-width: 860px; margin: 0 auto; padding: 64px 20px; }
-    h1 { font-size: 40px; margin-bottom: 8px; }
-    p.lead { font-size: 18px; color: #444; }
-    .cta a { display: inline-block; margin-right: 12px; padding: 10px 16px; border-radius: 6px; text-decoration: none; }
-    .primary { background: #111; color: #fff; }
-    .secondary { border: 1px solid #ddd; color: #111; }
-    ul { line-height: 1.7; }
-    footer { margin-top: 64px; color: #666; font-size: 14px; }
+    :root {
+      --bg: #071019;
+      --bg-soft: #0d1f30;
+      --card: #10253a;
+      --card-2: #122b43;
+      --line: rgba(255, 255, 255, 0.14);
+      --text: #f3f8fc;
+      --muted: #a9bfd4;
+      --accent: #2dd5ff;
+      --accent-2: #61f2b9;
+      --danger: #ff9d8b;
+      --shadow: 0 28px 60px rgba(0, 0, 0, 0.38);
+      --radius-xl: 24px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --wrap: 1140px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Manrope", "Trebuchet MS", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1100px 520px at -8% -10%, rgba(45, 213, 255, 0.25), transparent 62%),
+        radial-gradient(1000px 560px at 108% -10%, rgba(97, 242, 185, 0.2), transparent 64%),
+        linear-gradient(180deg, #071019 0%, #081523 100%);
+      line-height: 1.5;
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.04;
+      background-image: radial-gradient(circle at 1px 1px, #fff 1px, transparent 0);
+      background-size: 4px 4px;
+      z-index: 1;
+    }
+
+    .container {
+      width: min(100% - 40px, var(--wrap));
+      margin-inline: auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(7, 16, 25, 0.7);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .topbar-inner {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text);
+      font-family: "Space Grotesk", "Verdana", sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.01em;
+      font-weight: 700;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background:
+        conic-gradient(from 220deg at 60% 50%, var(--accent-2), var(--accent), #6ba9ff, var(--accent-2));
+      box-shadow: 0 10px 20px rgba(45, 213, 255, 0.32);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .nav a:hover {
+      color: var(--text);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 14px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      color: #042034;
+      background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 100%);
+      box-shadow: 0 14px 28px rgba(48, 198, 236, 0.33);
+    }
+
+    .btn-ghost {
+      color: var(--text);
+      border-color: var(--line);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .hero {
+      padding: 84px 0 44px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(97, 242, 185, 0.35);
+      background: rgba(97, 242, 185, 0.12);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: #ceffe8;
+    }
+
+    h1 {
+      margin: 16px 0 14px;
+      font-family: "Space Grotesk", "Verdana", sans-serif;
+      font-size: clamp(36px, 5.4vw, 62px);
+      line-height: 1.06;
+      letter-spacing: -0.02em;
+    }
+
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      max-width: 62ch;
+      font-size: clamp(17px, 2vw, 20px);
+    }
+
+    .hero-cta {
+      margin-top: 26px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta {
+      margin-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #c5d5e5;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .hero-panel {
+      border: 1px solid var(--line);
+      background: linear-gradient(165deg, rgba(18, 43, 67, 0.96), rgba(9, 23, 37, 0.94));
+      border-radius: var(--radius-xl);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .mock-window {
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      overflow: hidden;
+      background: #0d2134;
+    }
+
+    .mock-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: #0a1b2b;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .mock-body {
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .line {
+      height: 11px;
+      border-radius: 8px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.03));
+    }
+
+    .line.short {
+      width: 62%;
+    }
+
+    .line.mid {
+      width: 78%;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .pill {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.04);
+      color: #d5e6f5;
+    }
+
+    .section {
+      padding: 34px 0;
+    }
+
+    .section h2 {
+      margin: 0 0 12px;
+      font-family: "Space Grotesk", "Verdana", sans-serif;
+      font-size: clamp(28px, 4vw, 42px);
+      letter-spacing: -0.015em;
+    }
+
+    .section-intro {
+      margin: 0 0 24px;
+      color: var(--muted);
+      max-width: 70ch;
+      font-size: 17px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: linear-gradient(170deg, var(--card-2), var(--card));
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 19px;
+      letter-spacing: -0.01em;
+    }
+
+    .card p,
+    .card li {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .card ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .list-clean {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .list-clean li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: var(--muted);
+    }
+
+    .tick {
+      margin-top: 3px;
+      flex: 0 0 auto;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    }
+
+    .cross {
+      margin-top: 3px;
+      flex: 0 0 auto;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ff8f76, #ffb88e);
+    }
+
+    .process {
+      counter-reset: step;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .process li {
+      position: relative;
+      padding: 14px 16px 14px 52px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+      color: #d5e6f5;
+      font-weight: 600;
+    }
+
+    .process li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #082033;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .price-wrap {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .price-card {
+      position: relative;
+    }
+
+    .price-card .tag {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #062436;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+      border-radius: 999px;
+      padding: 6px 10px;
+    }
+
+    .price {
+      font-family: "Space Grotesk", "Verdana", sans-serif;
+      font-size: 42px;
+      line-height: 1;
+      margin: 12px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .price small {
+      font-size: 16px;
+      color: var(--muted);
+    }
+
+    .faq {
+      display: grid;
+      gap: 12px;
+    }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.04);
+      padding: 14px 16px;
+    }
+
+    details[open] {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    details p {
+      color: var(--muted);
+      font-size: 15px;
+      margin: 10px 0 0;
+    }
+
+    .final-cta {
+      margin-top: 14px;
+      border: 1px solid rgba(97, 242, 185, 0.3);
+      background:
+        radial-gradient(700px 300px at 10% -10%, rgba(45, 213, 255, 0.26), transparent 60%),
+        linear-gradient(155deg, rgba(11, 31, 49, 0.95), rgba(7, 20, 32, 0.96));
+      border-radius: var(--radius-xl);
+      padding: 24px;
+    }
+
+    .final-cta p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    footer {
+      padding: 22px 0 46px;
+      color: #9ab1c6;
+      font-size: 13px;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 16px;
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: reveal 650ms cubic-bezier(0.22, 0.81, 0.3, 1) forwards;
+      animation-delay: var(--delay, 0ms);
+    }
+
+    @keyframes reveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-3,
+      .grid-2,
+      .price-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar-inner {
+        min-height: 66px;
+      }
+
+      .nav .hide-sm {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(100% - 24px, var(--wrap));
+      }
+
+      .hero {
+        padding-top: 52px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .hero-cta {
+        display: grid;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>WP Social Publisher</h1>
-    <p class="lead">Publish and schedule WordPress posts to social networks. Simple and reliable.</p>
+  <div class="noise" aria-hidden="true"></div>
 
-    <div class="cta">
-      <a class="primary" href="#buy">Buy plugin</a>
-      <a class="secondary" href="#docs">Docs</a>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="#top" class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>WP Social Publisher</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a class="hide-sm" href="#features">Features</a>
+        <a class="hide-sm" href="#scope">Scope v1</a>
+        <a class="hide-sm" href="#pricing">Pricing</a>
+        <a class="hide-sm" href="#faq">FAQ</a>
+        <a class="btn btn-ghost" href="#docs">Docs</a>
+        <a class="btn btn-primary" href="#buy">Buy now</a>
+      </nav>
     </div>
+  </header>
 
-    <h2>What it does</h2>
-    <ul>
-      <li>Publish posts to multiple social networks</li>
-      <li>Schedule posts with WP-Cron</li>
-      <li>One post → multiple accounts</li>
-      <li>Clear logs and readable errors</li>
-      <li>No SaaS. Your data stays on your site</li>
-    </ul>
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow" data-reveal style="--delay: 60ms">WordPress Plugin | No SaaS</span>
+          <h1 data-reveal style="--delay: 120ms">Publish faster from WordPress to LinkedIn, X, and Facebook.</h1>
+          <p class="lead" data-reveal style="--delay: 180ms">
+            WP Social Publisher gives you one clear workflow: write once in WordPress, publish now or schedule, and send to multiple social accounts with readable logs when something fails.
+          </p>
+          <div class="hero-cta" data-reveal style="--delay: 240ms">
+            <a class="btn btn-primary" href="#buy">Buy WP Social Publisher</a>
+            <a class="btn btn-ghost" href="#docs">Read docs</a>
+          </div>
+          <div class="hero-meta" data-reveal style="--delay: 300ms">
+            <span class="chip">WP 6.x+</span>
+            <span class="chip">PHP 8.1+</span>
+            <span class="chip">Posts + Pages</span>
+            <span class="chip">Featured image support</span>
+          </div>
+        </div>
 
-    <h2>Supported networks</h2>
-    <ul>
-      <li>LinkedIn (pages & profiles)</li>
-      <li>X (Twitter)</li>
-      <li>Facebook Pages</li>
-    </ul>
-    <p><small>Instagram, Threads, and other networks are not supported.</small></p>
+        <aside class="hero-panel" data-reveal style="--delay: 220ms" aria-label="Product preview">
+          <div class="mock-window">
+            <div class="mock-head">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+            <div class="mock-body">
+              <div class="line"></div>
+              <div class="line mid"></div>
+              <div class="line short"></div>
+              <div class="pill-row">
+                <span class="pill">LinkedIn Personal</span>
+                <span class="pill">LinkedIn Page</span>
+                <span class="pill">X</span>
+                <span class="pill">Facebook Page</span>
+              </div>
+              <div class="line"></div>
+              <div class="line short"></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
 
-    <h2>Pricing</h2>
-    <p><strong>€49 / year</strong> — 1 site, updates, email support</p>
+    <section class="section" id="features">
+      <div class="container">
+        <h2 data-reveal>Everything needed to ship social posts from WP</h2>
+        <p class="section-intro" data-reveal style="--delay: 70ms">
+          Built for reliability and predictable support load. No giant feature list. Just the parts teams use every day.
+        </p>
+        <div class="grid-3">
+          <article class="card" data-reveal style="--delay: 80ms">
+            <h3>Send now</h3>
+            <p>Publish instantly to all selected accounts, even without creating a schedule row first.</p>
+          </article>
+          <article class="card" data-reveal style="--delay: 130ms">
+            <h3>Scheduled publish</h3>
+            <p>Plan posts with WP-Cron and keep everything inside your WordPress stack.</p>
+          </article>
+          <article class="card" data-reveal style="--delay: 180ms">
+            <h3>One post, many accounts</h3>
+            <p>Choose multiple connected accounts and publish with one action from the editor.</p>
+          </article>
+          <article class="card" data-reveal style="--delay: 230ms">
+            <h3>Featured image auto-use</h3>
+            <p>If a post has a featured image, it is automatically used for link preview where supported.</p>
+          </article>
+          <article class="card" data-reveal style="--delay: 280ms">
+            <h3>Readable logs</h3>
+            <p>Success, failed, and scheduled events with timestamps, account, network, remote ID, and clear messages.</p>
+          </article>
+          <article class="card" data-reveal style="--delay: 330ms">
+            <h3>Control switches</h3>
+            <p>Disable specific networks or stop all outgoing API calls with kill switch and feature flags.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-    <footer>
-      <p>© WP Social Publisher</p>
-    </footer>
-  </div>
+    <section class="section" id="scope">
+      <div class="container">
+        <div class="grid-2">
+          <article class="card" data-reveal>
+            <h3>Supported in v1</h3>
+            <ul class="list-clean">
+              <li><span class="tick" aria-hidden="true"></span><span>LinkedIn (Personal + Pages), X, Facebook Pages</span></li>
+              <li><span class="tick" aria-hidden="true"></span><span>Text, optional link, optional single image</span></li>
+              <li><span class="tick" aria-hidden="true"></span><span>One settings page, connections, logs, post editor metabox</span></li>
+              <li><span class="tick" aria-hidden="true"></span><span>1 site = 1 license key, no external SaaS backend</span></li>
+            </ul>
+          </article>
+          <article class="card" data-reveal style="--delay: 80ms">
+            <h3>Not included in v1</h3>
+            <ul class="list-clean">
+              <li><span class="cross" aria-hidden="true"></span><span>Instagram, Threads, Bluesky, TikTok</span></li>
+              <li><span class="cross" aria-hidden="true"></span><span>Video, carousel, multi-image post composer</span></li>
+              <li><span class="cross" aria-hidden="true"></span><span>AI text generation, analytics, click tracking</span></li>
+              <li><span class="cross" aria-hidden="true"></span><span>Bulk queue, auto-repost, recurring automation</span></li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="docs">
+      <div class="container">
+        <h2 data-reveal>Setup in 4 steps</h2>
+        <p class="section-intro" data-reveal style="--delay: 70ms">
+          This is designed to be operational quickly on a production WordPress site.
+        </p>
+        <ol class="process" data-reveal style="--delay: 120ms">
+          <li>Install and activate the plugin in WordPress.</li>
+          <li>Add your license key in WP Social Publisher settings.</li>
+          <li>Connect LinkedIn, X, and Facebook accounts.</li>
+          <li>Publish now or schedule from post/page editor.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="container">
+        <h2 data-reveal>Simple pricing</h2>
+        <p class="section-intro" data-reveal style="--delay: 70ms">
+          Start with one-site licensing and keep billing straightforward.
+        </p>
+        <div class="price-wrap" id="buy">
+          <article class="card price-card" data-reveal style="--delay: 100ms">
+            <h3>Annual</h3>
+            <p class="price">EUR 49 <small>/ year</small></p>
+            <ul>
+              <li>1 website license key</li>
+              <li>Plugin updates</li>
+              <li>Email support</li>
+            </ul>
+            <p style="margin-top:16px">
+              <a class="btn btn-primary" href="https://gumroad.com/" target="_blank" rel="noopener">Buy annual</a>
+            </p>
+          </article>
+          <article class="card price-card" data-reveal style="--delay: 160ms">
+            <span class="tag">Launch option</span>
+            <h3>Lifetime</h3>
+            <p class="price">EUR 99 <small>one-time</small></p>
+            <ul>
+              <li>1 website license key</li>
+              <li>Lifetime updates</li>
+              <li>Priority email support</li>
+            </ul>
+            <p style="margin-top:16px">
+              <a class="btn btn-ghost" href="https://gumroad.com/" target="_blank" rel="noopener">Buy lifetime</a>
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <h2 data-reveal>FAQ</h2>
+        <div class="faq">
+          <details data-reveal style="--delay: 60ms">
+            <summary>Does this use external SaaS servers?</summary>
+            <p>No. The plugin runs on your WordPress site. Data and tokens stay in your own environment.</p>
+          </details>
+          <details data-reveal style="--delay: 110ms">
+            <summary>Can I publish to multiple accounts at once?</summary>
+            <p>Yes. One post can be sent to multiple selected accounts in a single action.</p>
+          </details>
+          <details data-reveal style="--delay: 160ms">
+            <summary>Does Send now require a schedule?</summary>
+            <p>No. Send now posts immediately to selected accounts with no schedule required.</p>
+          </details>
+          <details data-reveal style="--delay: 210ms">
+            <summary>Which post types are supported?</summary>
+            <p>v1 supports WordPress Posts and Pages.</p>
+          </details>
+        </div>
+
+        <div class="final-cta" data-reveal style="--delay: 260ms">
+          <h3 style="margin-top:0">Ready to ship social publishing from WordPress?</h3>
+          <p>Launch WP Social Publisher today and keep your workflow in one place: WordPress editor, account selection, send now, schedule, logs.</p>
+          <p style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+            <a class="btn btn-primary" href="https://gumroad.com/" target="_blank" rel="noopener">Buy plugin</a>
+            <a class="btn btn-ghost" href="mailto:support@wpsocialpublisher.com">Contact support</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <span>(c) <span id="year"></span> WP Social Publisher</span>
+      <span>wpsocialpublisher.com</span>
+    </div>
+  </footer>
+
+  <script>
+    const yearNode = document.getElementById("year");
+    if (yearNode) {
+      yearNode.textContent = new Date().getFullYear();
+    }
+  </script>
 </body>
 </html>
