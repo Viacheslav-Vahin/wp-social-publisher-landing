@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="560" viewBox="0 0 1600 560" role="img" aria-labelledby="title desc">
+  <title id="title">Edit remote screenshot placeholder</title>
+  <desc id="desc">Replace this file with the real edit remote post screenshot.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a2136"/>
+      <stop offset="100%" stop-color="#1a4667"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="560" fill="url(#bg)"/>
+  <rect x="56" y="66" width="1488" height="430" rx="16" fill="#102841" stroke="#345f88" stroke-width="2"/>
+  <rect x="96" y="126" width="1408" height="96" rx="10" fill="#193b59"/>
+  <rect x="96" y="244" width="1408" height="200" rx="12" fill="#173552"/>
+  <text x="96" y="50" font-size="30" font-family="Manrope, Arial, sans-serif" fill="#bde5ff">WP Social Publisher - Edit remote post</text>
+  <text x="800" y="340" text-anchor="middle" font-size="36" font-family="Manrope, Arial, sans-serif" fill="#9cc6e8">Replace with real screenshot: Edit remote flow</text>
+</svg>

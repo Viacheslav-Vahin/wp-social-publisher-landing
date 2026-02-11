@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100" role="img" aria-labelledby="title desc">
+  <title id="title">API settings screenshot placeholder</title>
+  <desc id="desc">Replace this file with the real API settings screenshot.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1e30"/>
+      <stop offset="100%" stop-color="#174568"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1100" fill="url(#bg)"/>
+  <rect x="70" y="70" width="1460" height="960" rx="20" fill="#102841" stroke="#2f5a83" stroke-width="2"/>
+  <rect x="120" y="150" width="1360" height="380" rx="14" fill="#163451"/>
+  <rect x="120" y="560" width="1360" height="380" rx="14" fill="#163451"/>
+  <text x="120" y="58" font-size="34" font-family="Manrope, Arial, sans-serif" fill="#bde5ff">WP Social Publisher - API Settings</text>
+  <text x="800" y="575" text-anchor="middle" font-size="42" font-family="Manrope, Arial, sans-serif" fill="#9cc6e8">Replace with real screenshot: API Settings</text>
+</svg>

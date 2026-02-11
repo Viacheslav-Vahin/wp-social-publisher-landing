@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="480" viewBox="0 0 1600 480" role="img" aria-labelledby="title desc">
+  <title id="title">Scheduled posts screenshot placeholder</title>
+  <desc id="desc">Replace this file with the real scheduled and sent posts table screenshot.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a1d30"/>
+      <stop offset="100%" stop-color="#174262"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="480" fill="url(#bg)"/>
+  <rect x="55" y="62" width="1490" height="356" rx="16" fill="#102841" stroke="#325e88" stroke-width="2"/>
+  <rect x="96" y="128" width="1410" height="94" rx="10" fill="#193b59"/>
+  <rect x="96" y="236" width="1410" height="94" rx="10" fill="#173552"/>
+  <text x="96" y="48" font-size="30" font-family="Manrope, Arial, sans-serif" fill="#bde5ff">WP Social Publisher - Scheduled / Sent posts</text>
+  <text x="800" y="270" text-anchor="middle" font-size="36" font-family="Manrope, Arial, sans-serif" fill="#9cc6e8">Replace with real screenshot: Scheduled / Sent table</text>
+</svg>

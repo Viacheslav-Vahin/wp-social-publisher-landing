@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">Logs screenshot placeholder</title>
+  <desc id="desc">Replace this file with the real logs table screenshot.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#091f34"/>
+      <stop offset="100%" stop-color="#184666"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="980" fill="url(#bg)"/>
+  <rect x="70" y="70" width="1460" height="840" rx="20" fill="#102841" stroke="#335f88" stroke-width="2"/>
+  <rect x="120" y="145" width="1360" height="74" rx="12" fill="#193956"/>
+  <rect x="120" y="240" width="1360" height="88" rx="12" fill="#1a3d5d"/>
+  <rect x="120" y="340" width="1360" height="88" rx="12" fill="#173552"/>
+  <rect x="120" y="440" width="1360" height="88" rx="12" fill="#1a3d5d"/>
+  <rect x="120" y="540" width="1360" height="88" rx="12" fill="#173552"/>
+  <rect x="120" y="640" width="1360" height="88" rx="12" fill="#1a3d5d"/>
+  <text x="120" y="58" font-size="34" font-family="Manrope, Arial, sans-serif" fill="#bde5ff">WP Social Publisher - Logs</text>
+  <text x="800" y="505" text-anchor="middle" font-size="42" font-family="Manrope, Arial, sans-serif" fill="#9cc6e8">Replace with real screenshot: Logs</text>
+</svg>
