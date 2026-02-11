@@ -3,16 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>WP Social Publisher – Publish WordPress Posts to LinkedIn, X, and Facebook</title>
-  <meta name="description" content="Publish and schedule WordPress posts to LinkedIn, X, and Facebook. One post to multiple accounts. No SaaS. Clear logs.">
+  <title>WP Social Publisher - Strict Edition for LinkedIn, X, and Facebook</title>
+  <meta name="description" content="Strict/manual WordPress social publishing for LinkedIn, X, and Facebook. Domain-bound license, manual activation, clear logs.">
   <meta property="og:title" content="WP Social Publisher">
-  <meta property="og:description" content="Publish and schedule WordPress posts to LinkedIn, X, and Facebook.">
+  <meta property="og:description" content="Strict/manual publishing from WordPress to LinkedIn, X, and Facebook with domain-bound licenses.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://wpsocialpublisher.com/">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #071019;
@@ -195,6 +195,15 @@
       font-size: clamp(17px, 2vw, 20px);
     }
 
+    .strict-note {
+      margin: 14px 0 0;
+      max-width: 64ch;
+      color: #dbf6ea;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
     .hero-cta {
       margin-top: 26px;
       display: flex;
@@ -225,6 +234,26 @@
       border-radius: var(--radius-xl);
       padding: 20px;
       box-shadow: var(--shadow);
+    }
+
+    .hero-shot-wrap {
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      overflow: hidden;
+      background: #071929;
+    }
+
+    .hero-shot {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .hero-shot-meta {
+      margin: 12px 2px 0;
+      color: #c7dff2;
+      font-size: 13px;
+      font-weight: 700;
     }
 
     .mock-window {
@@ -418,6 +447,17 @@
       gap: 14px;
     }
 
+    .launch-notice {
+      margin: 0 0 18px;
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(97, 242, 185, 0.38);
+      background: rgba(97, 242, 185, 0.12);
+      color: #d8ffef;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
     .price-card {
       position: relative;
     }
@@ -452,6 +492,49 @@
     .faq {
       display: grid;
       gap: 12px;
+    }
+
+    .shot-wall {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .shot-card {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(170deg, var(--card-2), var(--card));
+      padding: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .shot-card.wide {
+      grid-column: span 12;
+    }
+
+    .shot-card.half {
+      grid-column: span 6;
+    }
+
+    .shot-card.third {
+      grid-column: span 4;
+    }
+
+    .shot-card img {
+      display: block;
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: #0a1b2b;
+    }
+
+    .shot-card figcaption {
+      margin-top: 10px;
+      color: #c7dced;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
     }
 
     details {
@@ -533,6 +616,11 @@
         grid-template-columns: 1fr;
       }
 
+      .shot-card.half,
+      .shot-card.third {
+        grid-column: span 12;
+      }
+
       .topbar-inner {
         min-height: 66px;
       }
@@ -558,6 +646,10 @@
       .hero-cta {
         display: grid;
       }
+
+      .strict-note {
+        font-size: 13px;
+      }
     }
   </style>
 </head>
@@ -572,11 +664,12 @@
       </a>
       <nav class="nav" aria-label="Main navigation">
         <a class="hide-sm" href="#features">Features</a>
+        <a class="hide-sm" href="#screens">Screens</a>
         <a class="hide-sm" href="#scope">Scope v1</a>
         <a class="hide-sm" href="#pricing">Pricing</a>
         <a class="hide-sm" href="#faq">FAQ</a>
         <a class="btn btn-ghost" href="#docs">Docs</a>
-        <a class="btn btn-primary" href="#buy">Buy now</a>
+        <a class="btn btn-primary" href="#buy">Buy &amp; activate</a>
       </nav>
     </div>
   </header>
@@ -585,44 +678,30 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <span class="eyebrow" data-reveal style="--delay: 60ms">WordPress Plugin | No SaaS</span>
+          <span class="eyebrow" data-reveal style="--delay: 60ms">WordPress Plugin | Strict Edition | No SaaS</span>
           <h1 data-reveal style="--delay: 120ms">Publish faster from WordPress to LinkedIn, X, and Facebook.</h1>
           <p class="lead" data-reveal style="--delay: 180ms">
-            WP Social Publisher gives you one clear workflow: write once in WordPress, publish now or schedule, and send to multiple social accounts with readable logs when something fails.
+            WP Social Publisher keeps social publishing inside WordPress with a strict, domain-bound license flow for production use.
           </p>
+          <p class="strict-note" data-reveal style="--delay: 210ms">Manual activation (SLA 2-24h). Publishing is blocked until your production domain license is active.</p>
           <div class="hero-cta" data-reveal style="--delay: 240ms">
-            <a class="btn btn-primary" href="#buy">Buy WP Social Publisher</a>
+            <a class="btn btn-primary" href="#buy">Buy and request activation</a>
             <a class="btn btn-ghost" href="#docs">Read docs</a>
           </div>
           <div class="hero-meta" data-reveal style="--delay: 300ms">
             <span class="chip">WP 6.x+</span>
             <span class="chip">PHP 8.1+</span>
             <span class="chip">Posts + Pages</span>
+            <span class="chip">Domain-bound key</span>
             <span class="chip">Featured image support</span>
           </div>
         </div>
 
         <aside class="hero-panel" data-reveal style="--delay: 220ms" aria-label="Product preview">
-          <div class="mock-window">
-            <div class="mock-head">
-              <span class="dot"></span>
-              <span class="dot"></span>
-              <span class="dot"></span>
-            </div>
-            <div class="mock-body">
-              <div class="line"></div>
-              <div class="line mid"></div>
-              <div class="line short"></div>
-              <div class="pill-row">
-                <span class="pill">LinkedIn Personal</span>
-                <span class="pill">LinkedIn Page</span>
-                <span class="pill">X</span>
-                <span class="pill">Facebook Page</span>
-              </div>
-              <div class="line"></div>
-              <div class="line short"></div>
-            </div>
+          <div class="hero-shot-wrap">
+            <img class="hero-shot" src="screenshots/metabox-preview.svg" alt="WordPress editor metabox with social preview and send controls">
           </div>
+          <p class="hero-shot-meta">Real plugin UI (post editor metabox preview).</p>
         </aside>
       </div>
     </section>
@@ -662,6 +741,45 @@
       </div>
     </section>
 
+    <section class="section" id="screens">
+      <div class="container">
+        <h2 data-reveal>Real plugin screens</h2>
+        <p class="section-intro" data-reveal style="--delay: 70ms">
+          Current v1 UI from WordPress admin: connections, API settings, license state, editor metabox, and logs.
+        </p>
+        <div class="shot-wall">
+          <figure class="shot-card wide" data-reveal style="--delay: 90ms">
+            <img src="screenshots/connections.svg" alt="Connections screen with Facebook, X and LinkedIn accounts">
+            <figcaption>Connections tab: manage multiple accounts, labels, groups, and per-account suffixes.</figcaption>
+          </figure>
+          <figure class="shot-card half" data-reveal style="--delay: 130ms">
+            <img src="screenshots/license-settings.svg" alt="License and feature flags in plugin settings">
+            <figcaption>License status card, feature flags, scheduling presets, and logs retention settings.</figcaption>
+          </figure>
+          <figure class="shot-card half" data-reveal style="--delay: 170ms">
+            <img src="screenshots/api-settings.svg" alt="API Settings tab for X and LinkedIn credentials">
+            <figcaption>API Settings tab for X and LinkedIn credentials with masked secure values.</figcaption>
+          </figure>
+          <figure class="shot-card half" data-reveal style="--delay: 210ms">
+            <img src="screenshots/metabox-preview.svg" alt="Post editor metabox with post preview and account selector">
+            <figcaption>Editor metabox: text composer, account chooser, featured image preview, send now, and scheduling.</figcaption>
+          </figure>
+          <figure class="shot-card half" data-reveal style="--delay: 250ms">
+            <img src="screenshots/logs.svg" alt="Logs tab with filters and contextual details">
+            <figcaption>Logs tab: searchable audit trail for publishing actions, token refreshes, and admin events.</figcaption>
+          </figure>
+          <figure class="shot-card half" data-reveal style="--delay: 290ms">
+            <img src="screenshots/scheduled-posts.svg" alt="Scheduled and sent posts table with actions">
+            <figcaption>Scheduled/Sent table with quick actions: view, delete, delete remote, and edit remote post.</figcaption>
+          </figure>
+          <figure class="shot-card half" data-reveal style="--delay: 330ms">
+            <img src="screenshots/edit-remote.svg" alt="Inline remote post editing panel">
+            <figcaption>Inline remote editing flow directly from the post metabox history block.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="scope">
       <div class="container">
         <div class="grid-2">
@@ -671,7 +789,7 @@
               <li><span class="tick" aria-hidden="true"></span><span>LinkedIn (Personal + Pages), X, Facebook Pages</span></li>
               <li><span class="tick" aria-hidden="true"></span><span>Text, optional link, optional single image</span></li>
               <li><span class="tick" aria-hidden="true"></span><span>One settings page, connections, logs, post editor metabox</span></li>
-              <li><span class="tick" aria-hidden="true"></span><span>1 site = 1 license key, no external SaaS backend</span></li>
+              <li><span class="tick" aria-hidden="true"></span><span>1 site = 1 RSA-signed domain-bound license key (manual activation)</span></li>
             </ul>
           </article>
           <article class="card" data-reveal style="--delay: 80ms">
@@ -691,13 +809,13 @@
       <div class="container">
         <h2 data-reveal>Setup in 4 steps</h2>
         <p class="section-intro" data-reveal style="--delay: 70ms">
-          This is designed to be operational quickly on a production WordPress site.
+          Strict/manual activation flow for production domains.
         </p>
         <ol class="process" data-reveal style="--delay: 120ms">
           <li>Install and activate the plugin in WordPress.</li>
-          <li>Add your license key in WP Social Publisher settings.</li>
-          <li>Connect LinkedIn, X, and Facebook accounts.</li>
-          <li>Publish now or schedule from post/page editor.</li>
+          <li>Purchase on Gumroad and send your production domain for activation.</li>
+          <li>Paste the issued single-site license key in WP Social Publisher settings.</li>
+          <li>Connect LinkedIn, X, and Facebook accounts, then publish or schedule.</li>
         </ol>
       </div>
     </section>
@@ -706,14 +824,17 @@
       <div class="container">
         <h2 data-reveal>Simple pricing</h2>
         <p class="section-intro" data-reveal style="--delay: 70ms">
-          Start with one-site licensing and keep billing straightforward.
+          One-site pricing with strict domain activation.
         </p>
+        <div class="launch-notice" data-reveal style="--delay: 90ms">
+          Early launch (strict mode): license keys are issued manually per production domain. Publishing is blocked until activation is complete.
+        </div>
         <div class="price-wrap" id="buy">
           <article class="card price-card" data-reveal style="--delay: 100ms">
             <h3>Annual</h3>
             <p class="price">EUR 49 <small>/ year</small></p>
             <ul>
-              <li>1 website license key</li>
+              <li>1 production domain license key</li>
               <li>Plugin updates</li>
               <li>Email support</li>
             </ul>
@@ -726,7 +847,7 @@
             <h3>Lifetime</h3>
             <p class="price">EUR 99 <small>one-time</small></p>
             <ul>
-              <li>1 website license key</li>
+              <li>1 production domain license key</li>
               <li>Lifetime updates</li>
               <li>Priority email support</li>
             </ul>
@@ -743,29 +864,33 @@
         <h2 data-reveal>FAQ</h2>
         <div class="faq">
           <details data-reveal style="--delay: 60ms">
-            <summary>Does this use external SaaS servers?</summary>
-            <p>No. The plugin runs on your WordPress site. Data and tokens stay in your own environment.</p>
-            <p>Social networks APIs may change. Updates are provided while your license is active</p>
+            <summary>How does license activation work?</summary>
+            <p>After purchase, send your production domain. We issue a domain-bound license key manually and you paste it in plugin settings.</p>
+            <p>Publishing stays blocked until the key is activated for that domain.</p>
           </details>
           <details data-reveal style="--delay: 110ms">
+            <summary>Does this use external SaaS servers?</summary>
+            <p>No. The plugin runs on your WordPress site. Data and tokens stay in your own environment.</p>
+          </details>
+          <details data-reveal style="--delay: 160ms">
             <summary>Can I publish to multiple accounts at once?</summary>
             <p>Yes. One post can be sent to multiple selected accounts in a single action.</p>
           </details>
-          <details data-reveal style="--delay: 160ms">
+          <details data-reveal style="--delay: 210ms">
             <summary>Does Send now require a schedule?</summary>
             <p>No. Send now posts immediately to selected accounts with no schedule required.</p>
           </details>
-          <details data-reveal style="--delay: 210ms">
+          <details data-reveal style="--delay: 260ms">
             <summary>Which post types are supported?</summary>
             <p>v1 supports WordPress Posts and Pages.</p>
           </details>
         </div>
 
-        <div class="final-cta" data-reveal style="--delay: 260ms">
-          <h3 style="margin-top:0">Ready to ship social publishing from WordPress?</h3>
-          <p>Launch WP Social Publisher today and keep your workflow in one place: WordPress editor, account selection, send now, schedule, logs.</p>
+        <div class="final-cta" data-reveal style="--delay: 310ms">
+          <h3 style="margin-top:0">Ready to ship strict social publishing from WordPress?</h3>
+          <p>Launch WP Social Publisher and keep everything in one workflow: editor metabox, account selection, send now, schedule, and logs.</p>
           <p style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
-            <a class="btn btn-primary" href="https://gumroad.com/" target="_blank" rel="noopener">Buy plugin</a>
+            <a class="btn btn-primary" href="https://gumroad.com/" target="_blank" rel="noopener">Buy and request activation</a>
             <a class="btn btn-ghost" href="mailto:support@wpsocialpublisher.com">Contact support</a>
           </p>
         </div>
